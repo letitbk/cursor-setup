@@ -4,7 +4,7 @@ AI-executable setup guide. An LLM agent can clone this repo and run the install 
 
 **Target user:** Non-technical Product Manager in e-commerce. Korean + English bilingual. Uses Figma + MS Office 365.
 
-**What this installs:** 22 Cursor extensions, 10 Claude Code plugins, 24 custom skills, 7 custom agents, 5 slash commands, 1 hook, global CLAUDE.md instructions, and multi-AI tools (Gemini CLI + Codex CLI).
+**What this installs:** 17-20 Cursor extensions, 10 Claude Code plugins, 24 custom skills, 7 custom agents, 5 slash commands, 1 hook, global CLAUDE.md instructions, and multi-AI tools (Gemini CLI + Codex CLI).
 
 ---
 
@@ -49,42 +49,45 @@ which cursor && which claude && which node && which python3 && which jq
 
 ## 2. Cursor Extensions
 
-Install 22 PM-relevant extensions:
+Install PM-relevant extensions (17 core + 3 optional):
 
 ```bash
+# Core extensions (verified on Cursor's Open VSX registry)
 cursor --install-extension anthropic.claude-code \
-  && cursor --install-extension github.copilot \
   && cursor --install-extension google.gemini-cli-vscode-ide-companion \
   && cursor --install-extension openai.chatgpt \
   && cursor --install-extension shd101wyy.markdown-preview-enhanced \
   && cursor --install-extension bierner.markdown-mermaid \
   && cursor --install-extension hediet.vscode-drawio \
-  && cursor --install-extension figma.figma-vscode-extension \
   && cursor --install-extension mechatroner.rainbow-csv \
   && cursor --install-extension grapecity.gc-excelviewer \
-  && cursor --install-extension mohsen1.prettify-json \
   && cursor --install-extension redhat.vscode-yaml \
   && cursor --install-extension cweijan.vscode-office \
-  && cursor --install-extension ms-python.python \
-  && cursor --install-extension ms-toolsai.jupyter \
   && cursor --install-extension eamodio.gitlens \
   && cursor --install-extension streetsidesoftware.code-spell-checker \
-  && cursor --install-extension usernamehsu.errorlens \
+  && cursor --install-extension usernamehw.errorlens \
   && cursor --install-extension oderwat.indent-rainbow \
   && cursor --install-extension alefragnani.project-manager \
   && cursor --install-extension pkief.material-icon-theme \
   && cursor --install-extension ms-ceintl.vscode-language-pack-ko
+
+# Optional (may need manual VSIX install from VS Code Marketplace)
+cursor --install-extension ms-python.python
+cursor --install-extension ms-toolsai.jupyter
+cursor --install-extension figma.figma-vscode-extension
 ```
+
+> **Note:** `github.copilot` is not needed — Cursor has built-in AI assistance. `mohsen1.prettify-json` is removed — Cursor has built-in JSON formatting. The 3 optional extensions are VS Code Marketplace exclusives that may require downloading the `.vsix` file manually from [marketplace.visualstudio.com](https://marketplace.visualstudio.com) and installing via `cursor --install-extension path/to/file.vsix`.
 
 | Group | Extensions | Purpose |
 |-------|-----------|---------|
-| AI Copilots (4) | claude-code, copilot, gemini, chatgpt | Multi-AI assistance |
+| AI Copilots (3) | claude-code, gemini, chatgpt | Multi-AI assistance |
 | Markdown/PRD (2) | markdown-preview-enhanced, markdown-mermaid | PRD authoring with diagrams |
 | Diagrams (1) | vscode-drawio | Flow diagrams and wireframes |
-| Figma (1) | figma-vscode-extension | Design integration |
-| Data (4) | rainbow-csv, gc-excelviewer, prettify-json, vscode-yaml | Data file handling |
+| Figma (1) | figma-vscode-extension *(optional)* | Design integration |
+| Data (3) | rainbow-csv, gc-excelviewer, vscode-yaml | Data file handling |
 | Office (1) | vscode-office | MS Office file preview |
-| Python/Data (2) | python, jupyter | Data analysis notebooks |
+| Python/Data (2) | python, jupyter *(optional)* | Data analysis notebooks |
 | QoL (6) | gitlens, spell-checker, errorlens, indent-rainbow, project-manager, material-icon-theme | Editor quality of life |
 | Korean (1) | vscode-language-pack-ko | Korean language support |
 
@@ -113,7 +116,7 @@ The [settings.json](settings.json) configures:
 Run these inside Claude Code CLI:
 
 ```
-/plugin install superpowers@claude-plugins-official
+/plugin install superpowers@obra
 /plugin install context7@claude-plugins-official
 /plugin install figma@claude-plugins-official
 /plugin install playwright@claude-plugins-official
@@ -324,7 +327,7 @@ echo "=== Done ==="
 ### Expected output
 
 ```
-1. Cursor extensions: 22 (expected: >= 22)
+1. Cursor extensions: 17+ (expected: 17 core, up to 20 with optional)
 2. Settings.json: valid, 10 plugins (expected: 10)
 3. Skills: 24 (expected: 24)
 4. Agents: 7 (expected: 7)

@@ -44,36 +44,44 @@ fi
 echo ""
 
 # ---------- 2. Cursor Extensions ----------
-echo "2. Installing Cursor extensions (22)..."
+echo "2. Installing Cursor extensions..."
 
+# Extensions verified to work on Cursor's Open VSX registry
 EXTENSIONS=(
   anthropic.claude-code
-  github.copilot
   google.gemini-cli-vscode-ide-companion
   openai.chatgpt
   shd101wyy.markdown-preview-enhanced
   bierner.markdown-mermaid
   hediet.vscode-drawio
-  figma.figma-vscode-extension
   mechatroner.rainbow-csv
   grapecity.gc-excelviewer
-  mohsen1.prettify-json
   redhat.vscode-yaml
   cweijan.vscode-office
-  ms-python.python
-  ms-toolsai.jupyter
   eamodio.gitlens
   streetsidesoftware.code-spell-checker
-  usernamehsu.errorlens
+  usernamehw.errorlens
   oderwat.indent-rainbow
   alefragnani.project-manager
   pkief.material-icon-theme
   ms-ceintl.vscode-language-pack-ko
 )
 
+# These may need manual VSIX install (Microsoft Marketplace exclusives)
+OPTIONAL_EXTENSIONS=(
+  ms-python.python
+  ms-toolsai.jupyter
+  figma.figma-vscode-extension
+)
+
 if command -v cursor > /dev/null 2>&1; then
   for ext in "${EXTENSIONS[@]}"; do
     cursor --install-extension "$ext" 2>/dev/null && ok "$ext" || warn "Failed: $ext"
+  done
+  echo ""
+  echo "   Installing optional extensions (may need manual VSIX install if they fail)..."
+  for ext in "${OPTIONAL_EXTENSIONS[@]}"; do
+    cursor --install-extension "$ext" 2>/dev/null && ok "$ext" || warn "Failed: $ext — install manually from VS Code Marketplace VSIX"
   done
 else
   warn "Skipping extensions — cursor not in PATH"
@@ -200,7 +208,7 @@ echo "10. Plugin installation (manual step)"
 echo ""
 echo "   Open Claude Code CLI and run these commands:"
 echo ""
-echo "   /plugin install superpowers@claude-plugins-official"
+echo "   /plugin install superpowers@obra"
 echo "   /plugin install context7@claude-plugins-official"
 echo "   /plugin install figma@claude-plugins-official"
 echo "   /plugin install playwright@claude-plugins-official"
@@ -218,7 +226,7 @@ echo ""
 
 if [ "$HAS_CURSOR" -eq 1 ]; then
   EXT_COUNT=$(cursor --list-extensions 2>/dev/null | wc -l | tr -d ' ')
-  echo "1. Cursor extensions: $EXT_COUNT (expected: >= 22)"
+  echo "1. Cursor extensions: $EXT_COUNT (expected: >= 17, up to 20 with optional)"
 else
   echo "1. Cursor extensions: SKIPPED (cursor not in PATH)"
 fi
