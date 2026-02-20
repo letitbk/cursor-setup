@@ -1,0 +1,4 @@
+.claude/
+codex_review_*.md
+*.backup.*
+.DS_Store
